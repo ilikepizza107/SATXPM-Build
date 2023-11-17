@@ -35,6 +35,7 @@ BOWSER
 11 - Nihil Bowser by ilikepizza107
 
 PEACH
+09 - Cyphr Peach by ilikepizza107
 
 ZELDA
 
@@ -45,6 +46,7 @@ ICE CLIMBERS
 MARTH
 15 - Egsid Marth by ilikepizza107
 34 - Notorious DOG Marth by ilikepizza107
+35 - Gunther Marth by ilikepizza107
 
 MR. GAME & WATCH
 
@@ -80,6 +82,7 @@ DEDEDE
 LUCARIO
 
 IKE
+07 - Gunther Ike by ilikepizza107
 
 R.O.B.
 
