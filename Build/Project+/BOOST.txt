@@ -50,6 +50,13 @@ op blt- 0x34	   @ $8018CFC8
 .include Source/Stagelists/Menus.asm
 .include Source/Stagelists/RandomStagelist.asm
 
+###############################################
+NO CONTEST -> RUN IT BACK [ilikepizza107]
+###############################################
+word 0x52554E20 @ $8045B5C8 # RUN 
+word 0x49542042 @ $8045B5CC # IT B
+word 0x41434B00 @ $8045B5D0 # ACK
+
 .include Source/Extras/Console.asm	# Only use this on a Wii or Wii U! The codes in this are necessary for the slower specifications of the actual console.
 #.include Source/Extras/Netplay.asm	# Only use this in Dolphin! The codes in this will result in bad behavior on the Wii!
 
