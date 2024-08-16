@@ -23,8 +23,8 @@ TABLE_1:
 0x01,	| # Final_Destination
 0x23,	| # Dream_Land
 0x0B,	| # Frigate_Husk
-0x1A,	| # Smashville
 0x00,	| # Battlefield
+0x1A,	| # Smashville
 0x28,	| # Pokemon_Stadium_2
 0x03,	| # Luigis_Mansion
 0x2B,	| # Training
