@@ -21,6 +21,10 @@ SAMUS
 YOSHI
 
 KIRBY
+40 - SSK Kirby by SSK, SJS
+41 - SSK Red Kirby by SSK, SJS
+42 - SSK Blue Kirby by SSK, SJS
+43 - SSK Green Kirby by SSK, SJS
 
 FOX
 
@@ -29,6 +33,7 @@ PIKACHU
 LUIGI
 
 CAPTAIN FALCON
+45 - Sunnyknight Falcon by Autumn
 
 NESS
 25 - Ntire Ness by ilikepizza107
@@ -99,6 +104,8 @@ ROY
 TOON LINK
 
 WOLF
+25 - Sunnyknight Wolf by Autumn
+34 - Kakashi Wolf by Autumn
 
 SNAKE
 
