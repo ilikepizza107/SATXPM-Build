@@ -52,8 +52,8 @@ ICE CLIMBERS
 
 MARTH
 15 - Egsid Marth by ilikepizza107
-34 - Notorious DOG Marth by ilikepizza107
-35 - Gunther Marth v1 by ilikepizza107
+34 - Gunther Marth v1 by ilikepizza107
+35 - Notorious DOG Marth by ilikepizza107
 
 MR. GAME & WATCH
 
@@ -124,7 +124,6 @@ STAGES
 
 POKEMON STADIUM 2
 Base - SATX PS2 by ilikepizza107
-
 
 ################
 MENUS
