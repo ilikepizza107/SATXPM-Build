@@ -91,7 +91,7 @@ DEDEDE
 LUCARIO
 
 IKE
-07 - Gunther Ike by ilikepizza107
+24 - Gunther Ike by ilikepizza107
 
 R.O.B.
 
@@ -117,7 +117,6 @@ GIGA BOWSER
 11 - Nihil Giga Bowser by ilikepizza107
 
 KNUCKLES
-
 
 ########################
 STAGES
