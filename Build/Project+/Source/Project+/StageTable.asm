@@ -1,6 +1,6 @@
-Stage Select Screen Table Data
-
-.include Source/Stagelists/SAStagelist.asm
-.include Source/Stagelists/SADubsStagelist.asm
-.include Source/Stagelists/2023Proposed.asm
+.include Source/Stagelists/Default.asm
+.include Source/Stagelists/SATXSingles.asm
+.include Source/Stagelists/SATXDoubles.asm
+.include Source/Stagelists/2024Singles.asm
+.include Source/Stagelists/2023Singles.asm
 .include Source/Stagelists/PMBR.asm

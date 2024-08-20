@@ -1,7 +1,8 @@
 ################
 PSA
 ################
-
+PSA edits for Goosluj ZSS by ilikepizza107
+ -PSA Edited: Sub Action A, SFX; Sub Action B, SFX; Sub Action C, SFX; Sub Action E, SFX; Sub Action F, SFX; Sub Action 10, SFX; Sub Action 11, SFX; Sub Action 12, SFX; Sub Action 2A, SFX; Sub Action 30, SFX; Sub Action 31, SFX; Sub Action 32, SFX; Sub Action 33, SFX; Sub Action 36, SFX; Sub Action 43, SFX; Sub Action 44, SFX; Sub Action 45, SFX; Sub Action 48, SFX; Sub Action 4E, SFX; Sub Action 53, SFX; Sub Action 54, SFX; Sub Action 55, SFX; Sub Action 63, SFX; Sub Action 64, SFX; Sub Action 65, SFX; Sub Action 66, SFX; Sub Action 67, SFX; Sub Action 68, SFX; Sub Action 69, SFX; Sub Action 6A, SFX; Sub Action 6B, SFX; Sub Action AF, SFX; Sub Action B0, SFX; Sub Action B1, SFX; Sub Action B2, SFX; Sub Action B8, SFX; Sub Action B9, SFX; Sub Action BA, SFX; Sub Action BB, SFX; Sub Action BE, SFX; Sub Action BF, SFX; Sub Action C0, SFX; Sub Action C1, SFX; Sub Action C3, SFX; Sub Action D7, SFX; Sub Action D8, SFX; Sub Action D9, SFX; Sub Action DC, SFX; Sub Action DD, SFX; Sub Action DE, SFX; Sub Action E6, SFX; Sub Action E7, SFX; Sub Action E8, SFX; Sub Action E9, SFX; Sub Action FC, SFX; Sub Action FD, SFX; Sub Action 151, SFX; Sub Action 152, SFX; Sub Action 153, SFX; Sub Action 154, SFX; Sub Action 155, SFX; Sub Action 156, SFX; Sub Action 157, SFX; Sub Action 158, SFX; Sub Action 159, SFX; Sub Action 15A, SFX; Sub Action 15C, SFX; Sub Action 1C2, SFX; Sub Action 1C3, SFX; Sub Action 1C6, SFX; Sub Action 1E2, SFX; Sub Action 1E5, SFX; Sub Action 1E6, SFX; Sub Routine D550 (Now FD60);
 
 ################
 SKINS
@@ -15,10 +16,15 @@ LINK
 
 SAMUS
 40 - GooSluj Samus by ilikepizza107
+45 - Nihil Samus by ilikepizza107
 
 YOSHI
 
 KIRBY
+40 - SSK Kirby by SSK, SJS
+41 - SSK Red Kirby by SSK, SJS
+42 - SSK Blue Kirby by SSK, SJS
+43 - SSK Green Kirby by SSK, SJS
 
 FOX
 
@@ -27,6 +33,7 @@ PIKACHU
 LUIGI
 
 CAPTAIN FALCON
+45 - Sunnyknight Falcon by Autumn
 
 NESS
 25 - Ntire Ness by ilikepizza107
@@ -45,8 +52,8 @@ ICE CLIMBERS
 
 MARTH
 15 - Egsid Marth by ilikepizza107
-34 - Notorious DOG Marth by ilikepizza107
-35 - Gunther Marth by ilikepizza107
+34 - Gunther Marth v1 by ilikepizza107
+35 - Notorious DOG Marth by ilikepizza107
 
 MR. GAME & WATCH
 
@@ -61,6 +68,7 @@ PIT
 
 ZERO SUIT SAMUS
 40 - GooSluj ZSS by ilikepizza107
+45 - Nihil ZSS by ilikepizza107
 
 OLIMAR
 40 - CP9 Olimar by FingerStripes
@@ -83,7 +91,7 @@ DEDEDE
 LUCARIO
 
 IKE
-07 - Gunther Ike by ilikepizza107
+24 - Gunther Ike by ilikepizza107
 
 R.O.B.
 
@@ -96,6 +104,8 @@ ROY
 TOON LINK
 
 WOLF
+25 - Sunnyknight Wolf by Autumn
+34 - Kakashi Wolf by Autumn
 
 SNAKE
 
@@ -108,15 +118,17 @@ GIGA BOWSER
 
 KNUCKLES
 
-
 ########################
 STAGES
 ########################
 
 POKEMON STADIUM 2
-Base -  by ilikepizza107
-
+Base - SATX PS2 by ilikepizza107
 
 ################
 MENUS
 ################
+
+New "Ready To Fight!" Model by Xenthos
+
+CSS + SSS by ilikepizza107

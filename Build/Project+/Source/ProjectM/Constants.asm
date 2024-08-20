@@ -79,14 +79,16 @@
 
 3386 - Kirby Inhale Time Reduced per Input [10->12]
 	float 12.0	   @ $80B886A4
+3389 - Kirby Inhale Star reduction per Input [10 -> 0] # added from vanilla
+	float 0.0	   @ $80B886B0
 3400 - DK Cargo Hold Base Time [100->90]
 	float 90.0	   @ $80B886DC
 3401 - DK Cargo Hold Increase per Damage [5->2.5 (was 0.592 in 2.0)]
 	float 2.5	   @ $80B886E0
 3402 - DK Cargo Hold Reduction per Input [10->8]
 	float 8.0	   @ $80B886E4
-3412 - Dedede Inhale Star Reduction per Input [12 -> 3]
-	float 3.0	   @ $80B8870C
+3412 - Dedede Inhale Star Reduction per Input [12 -> 3 -> 0] # changed from vanilla
+	float 0.0	   @ $80B8870C
 3466 - Curry Run Animation Speed Multiplier [2->1]
 	float 1.0	   @ $80B887E4
 
@@ -145,6 +147,8 @@ Dash within Dash Uses Run Sensitivity [0.80->0.62]
 Threshold to begin tracking distance vs time on stick movements [0.25->0.35]
 	float  0.35 @ $80AD7528
 	float -0.35 @ $80AD752C
+D-Pad acceleration threshold for solo Wiimote movement [30->23.999]
+	float 23.999 @ $805A182C
 Item Ground Smash U-Throw Velocity [4.1->4.34]
 	float 4.34 @ $80F9FDBC
 

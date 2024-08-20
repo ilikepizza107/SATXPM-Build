@@ -1,5 +1,5 @@
 ################################################################################
-PM Replay Fix V2.0 [Fracture, Stage Reload Fix by Kapedani, Recode by DukeItOut]
+PM Replay Fix V2.3 [Fracture, Stage Reload Fix by Kapedani, Recode by DukeItOut]
 #
 # 1.1: 
 # Updated to account for ASL
@@ -11,7 +11,25 @@ PM Replay Fix V2.0 [Fracture, Stage Reload Fix by Kapedani, Recode by DukeItOut]
 # 2.0:
 # Fixed issue where Wiimote controllers could not record replays.
 #
-################################################################################
+# 2.0b:
+# Got ASL value from a new pointer location for more stability.
+#
+# 2.1:
+# Fixed issue where controllers in unexpected arrangements could influence 
+# Wiimotes or CPUs
+#
+# 2.1b:
+# Adjusted based on an oversight where player slots were always assumed to be in
+# a specific order
+#
+# 2.2:
+# Fixed issue where sharing stocks was never recognized during a replay
+#
+# 2.3:
+# Handled oversight in custom replay system that misinterpreted a special command
+# as a command size instead, causing cinematic freezes to skip over copious
+# amounts of bytes in the replay.
+######################################################################################
 HOOK @ $8004BB04
 {
 	li r3, 11				# \
@@ -93,8 +111,8 @@ HOOK @ $80764F18
   # 2 = Battles
   # 1 = Replay
   
-  	lis r12, 0x800C			#
-	lhz r12, -0x615E(r12)   # Get ASL input from 800B9EA2
+  	lis r12, 0x8054			#
+	lhz r12, -0x1046(r12)   # Get ASL input from 8053EFBA (copied from 800B9EA2)
 	
 	sth r12,  0x44A(r3) # previously 91301F4A. Sets replay ASL input.
 	lwz r12, -0x2F8(r4) # previously 9134C908
@@ -104,9 +122,21 @@ HOOK @ $80764F18
 	subi r12, r4, 0x2AC	# previously 9134C954
 	lwz r31, -0x2F4(r4) # previously 9134C90C
 	add r12, r12, r31
-	rlwinm. r31, r28, 0, 24, 24; bne- loc_0xA0	# Odd operation, probably not right.
 	
-  lbz r31, 0x0B(r28);  cmpwi r31, 0xFF;  beq- loc_0xA0	# Controller info. Will be FF if an AI.
+	
+	li r31, 0		   # \
+	stw r31, 0x00(r12) # |
+	stw r31, 0x04(r12) # | Reset replay values so that they can't be uninitialized
+	stb r31, 0x08(r12) # /
+	
+  addi r4, r28, 0x42    # \
+  lis r3, 0x80B9        # | Check if a CPU
+  lwz r3, -0x5D28(r3)   # |
+  bla 0x8FC8A4          # |
+  cmpwi r3, 0           # |
+  beq is_CPU            # /
+  
+  lbz r31, 0x42(r28) # Which player slot this is.
   lis r30, 0x805B;  ori r30, r30, 0xC068	# Something related to the Code Menu?
   rlwinm r31, r31, 2, 28, 29		# was previously rlwinm r31, r31, 2, 0, 1, which broke it
   add r31, r31, r30
@@ -114,6 +144,7 @@ HOOK @ $80764F18
   stw r30, 0(r12)
 
 loc_0xA0:
+is_CPU:
   lwz r31, 0x78(r27)
   sth r31, 0x04(r12)
   
@@ -142,7 +173,7 @@ loc_0xA0:
   stb r30, 7(r12)
   lwz r30, -0x5C(r31)		# LA-Basic[77]
   stb r30, 8(r12)
-  
+   
   # r12 = address at 9134C954 + offset pointed to by 9134C90C
   # (word) 0x0(r12) = Button Inputs (half) + Control X (byte) + Control Y (byte)
   # (half) 0x4(r12) = Previous Button Inputs
@@ -150,6 +181,9 @@ loc_0xA0:
   # (byte) 0x7(r12) = LA-Float[35] (C-Stick Y as an integer)
   # (byte) 0x8(r12) = LA-Basic[77] (L/R analog status)
   
+	li r3, 11				# \
+	bla 0x0249CC			# / Get replay heap offset
+	lwz r4, 0x8(r3)			# Get end of replay heap     
   
   
   lwz r30, -0x2F4(r4) # previously 9134C90C
@@ -311,9 +345,32 @@ HOOK @ $8004BE50
   lwz r8, 0x12A4(r8)
   or. r3, r3, r8;  beq- %END%	# Skip if this is in a replay viewing or not frame 0.
   lbz r4, 1(r6)
+  cmpwi r4, 0x80		# Typically if frozen for a cinematic this is 0x80, 
+  bne %END%				# but this will mess up calculations! We don't want that!
+  li r4, 5				# Frozen gameplay uses 5 bytes to calculate!
+						# For Fracture replay info, non-frozen is typically 4+2*playercount
   
   # Normally the operation here is add r4, r4, r3. Why is it not included?
 }
+
+# Used for share stock during team battles
+HOOK @ $80958558
+{
+	lhz r0, 0x8(r1)			# Original operation. Gets button inputs
+	lis r12, 0x805C;  lwz r12, -0x4040(r12);  cmpwi r12, 0x1;  bne- %END%
+  # 2 = Battles
+  # 1 = Replay (we need to make sure that the replay uses the information correctly)
+	li r3, 11				# \
+	bla 0x0249CC			# / Get replay heap offset
+	lwz r3, 0x8(r3)			# Get end of replay heap
+	subi r4, r3, 0x2AC 	# previously 9134C954
+	lwz r5, -0x23C(r3) 	# previously 9134C9C4
+	rlwinm r5, r5, 3, 1, 0
+	add r3, r4, r5
+	lhz r0, 0(r3)		# Get normal button info
+}
+
+# Used for reading replay info
 HOOK @ $8091319C
 {  
 # PRESERVE  
@@ -331,6 +388,12 @@ HOOK @ $8091319C
 
   
   lis r12, 0x805C;  lwz r12, -0x4040(r12);  cmpwi r12, 0x1;  bne- loc_0x220
+  
+	lis r3, 0x805A			# \
+	lwz r3, 0x60(r3)		# |
+	lwz r3, 4(r3)			# | Force replays to check for share stock a frame earlier
+	lwz r3, 0x54(r3)		# | than normal
+	bla 0x9583EC			# /
   
 	li r3, 11				# \
 	bla 0x0249CC			# / Get replay heap offset
@@ -477,15 +540,19 @@ loc_0x220:
   lwz r12, 0(r20)	# Original operation
 }
 
+HOOK @ $8004B1D4
+{
+  	li r11, 0x52			    # \ Added writing R to P+'s stage system to signify load stage
+	lis r12, 0x8054 	    # |
+	stb r11, -0xFFD(r12)  # / 8053F003 
+  	lhz r0, 0xEE3(r3)
+}
+
 HOOK @ $8004ACC8
 {
 	li r3, 0
 	lis r12, 0x805C
 	stw r3, -0x75F8(r12) # 805B8A08
-	li r3, 0x21			# \ Added writing ! to P+'s stage system to signify load stage
-	lis r12, 0x8054 	# |
-	stb r3, -0xFFD(r12) # / 8053F003 
-
 	mr r3, r0		# Original operation
 }
 HOOK @ $80764E88
@@ -652,12 +719,15 @@ HOOK @ $803E16C8		# PFFat_CountFreeClusters
 op li r27, 1337 @ $8001EFDC # Gamer.	
 HOOK @ $80017388	# Someone, please move this to somewhere not so low-level.
 {
-	cmpwi r3, 0x1;  bne- loc_0x80		# Only modify things if it thinks we are paused
+	cmpwi r3, 1;  bne- end		# Only modify things if it thinks we are paused
 	li r3, 11			# \
 	bla 0x0249CC		# | Get replay heap offset
 	lwz r12, 0x8(r3)	# / Get end of replay heap
 	
-	lis r3, 0x805C; lwz r3, -0x4040(r3); xori r3, r3, 1; cmpwi r3, 0; bne- loc_0x80
+	lis r3, 0x805C; lwz r3, -0x4040(r3)
+	xori r3, r3, 1;	cmpwi r3, 0
+	bne- end
+	
 	stw r31, -0x228(r12)	# \ Dangerous way to save memory?
 	stw r30, -0x224(r12)	# /
     stw r30, 0x20(r1)		# \ Save better
@@ -673,14 +743,15 @@ HOOK @ $80017388	# Someone, please move this to somewhere not so low-level.
 	lwz r30, 0x100(r3); or r31, r31, r30	# Check previous input of Wii Controllers
 	lwz r30, 0x140(r3); or r31, r31, r30 
 	lwz r30, 0x180(r3); or r31, r31, r30
-	lwz r30, 0x1C0(r3); or. r31, r31, r30; beq- loc_0x60
+	lwz r30, 0x1C0(r3); or r31, r31, r30
+	andi. r31, r31, 0x100; beq- setSpeed
 	
 	li r30, 2
 
-loc_0x60:
-  li r3, 0x1
+setSpeed:
+  li r3, 1
   cmpw r19, r30;  bge- loc_0x70
-  li r3, 0x0
+  li r3, 0
 
 loc_0x70:
   subi r30, r12, 0x228	# previously 9134C9D8
@@ -689,19 +760,22 @@ loc_0x70:
   lwz r30, 0x20(r1)		# \ Restore
   lwz r31, 0x24(r1)		# /
 
-loc_0x80:
-  cmpwi r3, 0x0			# Original operation
+end:
+  cmpwi r3, 0			# Original operation
 }
 
 HOOK @ $8004B9E0
 {
-  lis r30, 0x805C;  lbz r30, -0x75F6(r30);  cmpwi r30, 0x0;  bne- loc_0x28 # Unk Pause Status
-  lis r30, 0x805C;  lbz r30, -0x75F5(r30);  cmpwi r30, 0x0;  beq+ loc_0x28 # Code Menu/Frame Advance active
-  li r0, 0x0;  b %END%
+  lis r30, 0x805C; lbz r30, -0x75F6(r30)
+  cmpwi r30, 0;    bne- loc_0x28 		# Unk Pause Status
+  lis r30, 0x805C; lbz r30, -0x75F5(r30)
+  cmpwi r30, 0;    beq+ loc_0x28 		# Code Menu/Frame Advance active
+  li r0, 0; b %END%
 
 loc_0x28:
   lwz r0, 0(r3)				# Original operation
 }
+
 HOOK @ $8004BCB8
 {
 	mr r26, r4
@@ -712,53 +786,61 @@ HOOK @ $8004BCB8
 	
 	lis r24, 0x805B; ori r24, r24, 0xAD04	# \
 	lwz r31, 0x00(r24)						# |
-	lwz r30, 0x40(r24);	or r31, r31, r30	# | Check previous input of GC player slots.
-	lwz r30, 0x80(r24); or r31, r31, r30	# |
+	lwz r30, 0x40(r24);	or r31, r31, r30	# | Check previous input of 
+	lwz r30, 0x80(r24); or r31, r31, r30	# | GC player slots.
 	lwz r30, 0xC0(r24); or r31, r31, r30	# |
-	andi. r0, r31, 0x200; bne- pressedB		# /	# check if B is pressed during a replay
+	andi. r0, r31, 0x200; bne- pressedB		# /	Check if B is pressed during a replay
 	
 	lwz r31, 0x100(r24)						# \
-	lwz r30, 0x140(r24); or r31, r31, r30	# | Check previous input of Wii player slots.
-	lwz r30, 0x180(r24); or r31, r31, r30	# |
+	lwz r30, 0x140(r24); or r31, r31, r30	# | Check previous input of 
+	lwz r30, 0x180(r24); or r31, r31, r30	# | Wii player slots.
 	lwz r30, 0x1C0(r24); or r31, r31, r30	# |
-	andi. r0, r31, 0x200; bne- pressedB		# |	# check if B is pressed during a replay	
-	andis. r0, r31, 0x40; beq+ loc_0x90		# /
+	andi. r0, r31, 0x200; bne- pressedB		# |	Check if B is pressed during a replay
+	andis. r0, r31, 0x40; beq+ noInput		# /
 	
-pressedB:	
+pressedB:
 	
 	lhz r24, -0x2FC(r12)	# previously 9134C904
-	andi. r0, r24, 0x100; bne- loc_0x6C			# Check if A was also pressed during replay mode?
+	andi. r0, r24, 0x100	# Check if A was also pressed
+	bne- notPressedA		# during replay mode?  
 	
 	lis r31, 0x805C; 
 	lhz r31, -0x75F6(r31)
 	sth r31, -0x2FA(r12)	# previously 9134C906
-	li r24, 0x100								# Fake it if it isn't if B was pressed
+	li r24, 0x100			# Fake it if it isn't if B was pressed(?)
+notPressedA:
+	andi. r24, r24, 0x103
+	cmpwi r24, 0x100
+	bne- addOne
 	
-loc_0x6C:
-	andi. r24, r24, 0x103;  cmpwi r24, 0x100; bne- loc_0x88
-	lis r31, 0x805B;  ori r31, r31, 0x8A08
-	li r30, 0x102;  sth r30, 2(r31)	#changed to load the fact the game is paused to the state too
+	lis r31, 0x805B; ori r31, r31, 0x8A08
+	li r30, 0x102
+	sth r30, 2(r31)			# Load the pause state
 	
-loc_0x88:
-	addi r24, r24, 0x1;  b loc_0xBC
-loc_0x90:
+addOne:
+	addi r24, r24, 1
+	b checkFrameAdvance
+
+noInput:
 	lbz r24, -0x2FC(r12)			# previously 9134C904
-	cmpwi r24, 1; bne- loc_0xB8
+	cmpwi r24, 1; bne- setZero
 	lhz r24, -0x2FA(r12)			# previously 9134C906
 	lis r31, 0x805C; sth r24, -0x75F6(r31) # 805B8A0A
 	
-loc_0xB8:
-  li r24, 0x0
-loc_0xBC:
+setZero:
+  li r24, 0
+
+checkFrameAdvance:
   sth r24, -0x2FC(r12)				# previously 9134C904
-  lis r3, 0x805C										# \ added check for frame advance state
-  lbz r24, -0x75F6(r3); cmpwi r24, 0; bne- loc_0xF0		# /
-  lbz r24, -0x75F5(r3); cmpwi r24, 0; beq- loc_0xF0		# \ updated pause check to detect all IDs	
-  li r0, 0; b loc_0xF4									# /
+  lis r3, 0x805C											# \ added check for frame advance state
+  lbz r24, -0x75F6(r3); cmpwi r24, 0; bne- storeSpeed		# /
+  lbz r24, -0x75F5(r3); cmpwi r24, 0; beq- storeSpeed		# \ updated pause check to detect all IDs	
+  li r0, 0; b end											# /
   
-loc_0xF0:
+storeSpeed:
   lwz r0, 0(r25)		# Modification of original operation which used r3
-loc_0xF4:
+  
+end:
   mr r3, r25		   # \ Restore
   mr r4, r26		   # /
 }
