@@ -20,7 +20,7 @@ SATX Singles [Moto]
 TABLE_1:
 	byte[10] |
 0x1C,	| # Green_Hill_Zone
-0x18,	| # Fountain_of_Dreams
+0x05,	| # Bowser_Castle
 0x1E,	| # Sky_Sanctuary
 0x28,	| # Pokemon_Stadium_2
 0x23,	| # Dream_Land
@@ -33,6 +33,7 @@ TABLE_1:
 
 TABLE_2:
 	byte[25] |
+0x18,	| # Fountain_of_Dreams
 0x24,	| # Peach_Castle
 0x06,	| # Kongo_Jungle
 0x07,	| # Rumble_Falls
@@ -54,7 +55,6 @@ TABLE_2:
 0x1B,	| # Shadow_Moses
 0x1D,	| # PictoChat
 0x2B,	| # Training
-0x05,	| # Bowser_Castle
 0x21,	| # Golden_Temple
 0x3E,	| # Venom
 0x0A	| # Ceres_Space_Colony
