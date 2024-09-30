@@ -760,6 +760,13 @@ Corneria.tlst - 5 tracks
 	Frequency: 40
 
 ################
+Corneria_SNES.tlst - 1 track
+
+	Corneria (Star Fox)
+	G02.brstm (0x2764)
+	Frequency: 40
+
+################
 Crateria.tlst - 8 tracks
 
 	Green Brinstar
@@ -4722,6 +4729,13 @@ Training_Room.tlst - 6 tracks
 	Redial (Bomberman Hero)
 	Konami/Redial.brstm
 	Volume: 65
+	Frequency: 40
+
+################
+Treasure_Town.tlst - 1 track
+
+	Poke Floats (Melee)
+	W10.brstm (0x2808)
 	Frequency: 40
 
 ################
