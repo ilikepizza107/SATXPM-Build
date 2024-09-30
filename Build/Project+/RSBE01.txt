@@ -1144,7 +1144,7 @@ setLedgeGrab:
   mtctr r12 
   bctrl #set LA-Basic[79] = 0, ledgegrab count
 end:
-  stw r28, 0x38(r30)
+  stw r28, 0x38(r30) # Set Action
   li r29, 1
   lwz r3, 0x44(r30)
 }
