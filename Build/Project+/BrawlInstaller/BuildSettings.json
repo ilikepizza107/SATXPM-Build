@@ -218,7 +218,7 @@
           "Multiplier": null,
           "Offset": null,
           "AddTerminatorFrame": false,
-          "NormalizeTextureIds": true
+          "NormalizeTextureIds": false
         }
       ],
       "Prefix": "MenSelchrChrFace",
