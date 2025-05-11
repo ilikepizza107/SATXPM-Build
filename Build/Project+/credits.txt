@@ -34,7 +34,7 @@ PIKACHU
 LUIGI
 
 CAPTAIN FALCON
-45 - Sunnyknight Falcon by Autumn
+50 - Sunnyknight Falcon by Autumn
 
 NESS
 25 - Ntire Ness by ilikepizza107
@@ -75,6 +75,10 @@ ZERO SUIT SAMUS
 
 OLIMAR
 40 - CP9 Olimar by FingerStripes
+41 - CP9 Olimar Red by SOULLY, Fingerstripes
+42 - CP9 Olimar Yellow by SOULLY, Fingerstripes
+43 - CP9 Olimar Blue by SOULLY, Fingerstripes
+44 - CP9 Olimar Black by SOULLY, Fingerstripes
 
 LUCAS
 26 - wyatt Lucas by ilikepizza107
@@ -93,6 +97,8 @@ IVYSAUR
 DEDEDE
 
 LUCARIO
+25 - AcE Lucario by ilikepizza107
+30 - Growlithe360 Lucario by ilikepizza107
 
 IKE
 24 - Gunther Ike by ilikepizza107
@@ -102,6 +108,7 @@ R.O.B.
 JIGGLYPUFF
 
 WARIO
+30 - haydenetic Wario by ilikepizza107
 
 ROY
 
@@ -117,6 +124,7 @@ SNAKE
 SONIC
 
 WARIO MAN
+30 - haydenetic Wario-Man by ilikepizza107
 
 GIGA BOWSER
 11 - Nihil Giga Bowser by ilikepizza107
