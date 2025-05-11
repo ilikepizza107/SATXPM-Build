@@ -75,6 +75,10 @@ ZERO SUIT SAMUS
 
 OLIMAR
 40 - CP9 Olimar by FingerStripes
+41 - CP9 Olimar Red by SOULLY, Fingerstripes
+42 - CP9 Olimar Yellow by SOULLY, Fingerstripes
+43 - CP9 Olimar Blue by SOULLY, Fingerstripes
+44 - CP9 Olimar Black by SOULLY, Fingerstripes
 
 LUCAS
 26 - wyatt Lucas by ilikepizza107
