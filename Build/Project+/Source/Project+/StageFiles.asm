@@ -823,12 +823,20 @@ StageResults:
 	bne Default										# If nothing found, go to Default	
 
 Bowser_Results:
-	li r5, 0x4243			# Use "BC"
+	li r5, 0x425A			# Use "BZ"
 	%lwi(r12, 0x8053EFBA)   # Get ASL ID
 	lhz r12, 0(r12)
+	mr r11, r12				# preserve r12 in case a different alt was used
 	andi. r12, r12, 0x4000	# Check if Dry Bowser's Castle was selected
-	beq StoreString			#
+	beq Bowser_R_Alt		#
 	li r5, 0x4442			# If so, use "DB"
+	b StoreString
+
+Bowser_R_Alt:
+	mr r12, r11				# restore what r12 was
+	andi. r12, r12, 0x0020	# Check if R alt was used
+	beq StoreString			#
+	li r5, 0x4243			# If so, use "BC"
 	b StoreString
 
 Temple_of_Time_Results:
